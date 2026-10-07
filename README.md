@@ -38,6 +38,6 @@ No client mod is required to watch. For a Fabric installation, put **fabric/Peak
 
 Close PEAK and rerun setup. Keep the error message and `PEAK/BepInEx/LogOutput.log` when reporting a problem. Linux needs Steam launch option `WINEDLLOVERRIDES="winhttp=n,b" %command%` for BepInEx.
 
-Updates: close PEAK, extract the new version and rerun setup with your original host/client choice. Uninstall: back up `BepInEx/plugins/Peakthrough/data` for your saves, then remove `BepInEx/plugins/Peakthrough`. Windows end-to-end gameplay and a real two-PC session still need testing.
+Updates: close PEAK, extract the new version and rerun setup with your original host/client choice. Uninstall: remove `BepInEx/plugins/Peakthrough` from your PEAK game folder.
 
 [Build from source](BUILDING.md) · [Credits and license](CREDITS.md)
