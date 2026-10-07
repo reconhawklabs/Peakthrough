@@ -22,7 +22,7 @@ Minecraft blocks, tools, mobs, fishing and a dragon fight inside PEAK. Play alon
 2. Choose **client**, enter your PEAK folder, and wait for **“Peakthrough installed”**.
 3. Launch PEAK and join your host’s room normally.
 
-Everyone needs the same Peakthrough version. Inventories are separate; blocks and mobs are shared. Keep the same host for the run.
+Everyone needs the same Peakthrough version.
 
 ## Controls
 
