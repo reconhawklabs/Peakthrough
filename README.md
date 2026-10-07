@@ -26,7 +26,7 @@ Everyone needs the same Peakthrough version.
 
 ## Controls
 
-**1–9 / wheel:** select items · **same number again:** empty hand · **0:** backpack · **I:** inventory · **left mouse:** mine/attack · **right mouse:** place/use/fish · **Q:** drop. Climbing needs an empty hand.
+**1–9 / wheel:** select items · **same number again:** empty hand · **0:** backpack · **I:** inventory · **left mouse:** mine/attack · **right mouse:** place/use/fish · **Q:** drop.
 
 ## Watch from Minecraft — optional
 
