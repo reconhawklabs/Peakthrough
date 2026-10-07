@@ -20,7 +20,7 @@ Minecraft blocks, tools, mobs, fishing and a dragon fight inside PEAK. Play alon
 
 1. Complete **Before you start**, then run **Setup.cmd** (Linux: `sh Setup.sh`).
 2. Choose **client**, enter your PEAK folder, and wait for **“Peakthrough installed”**.
-3. Launch PEAK and join your host’s room normally. You do **not** start a Minecraft server or enter an IP address.
+3. Launch PEAK and join your host’s room normally.
 
 Everyone needs the same Peakthrough version. Inventories are separate; blocks and mobs are shared. Keep the same host for the run.
 
