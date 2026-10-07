@@ -5,7 +5,7 @@ Minecraft blocks, tools, mobs, fishing and a dragon fight inside PEAK. Play alon
 ## Before you start — everyone
 
 1. Own **PEAK** and **Minecraft Java Edition**. This mod uses Minecraft **26.3**.
-2. Install [BepInExPack_PEAK](https://thunderstore.io/c/peak/p/BepInEx/BepInExPack_PEAK/) first. Launch PEAK once, then close it. BepInEx is **not** included here.
+2. Install [BepInExPack_PEAK](https://thunderstore.io/c/peak/p/BepInEx/BepInExPack_PEAK/) first. Launch PEAK once, then close it.
 3. Install [Java 25 **JDK**](https://adoptium.net/temurin/releases/?version=25) and [Python 3](https://www.python.org/downloads/). On Windows, enable **Add to PATH** during installation.
 4. [Download Peakthrough v1](https://github.com/reconhawklabs/Peakthrough/archive/refs/tags/v1.0.0.zip), then **extract the ZIP**. Keep the extracted folder.
 
