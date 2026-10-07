@@ -1,0 +1,15 @@
+package com.bornparanoid.peakpassthrough.inventory;
+import com.google.gson.*;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+public final class InventoryMessages {
+ public static int menuSlot(int slot){if(slot<0||slot>=36)throw new IllegalArgumentException("slot");return slot<9?36+slot:slot;}
+ public static int stage(float progress){return progress>=1?-1:Math.max(0,Math.min(9,(int)(progress*10)));}
+ public static JsonObject stack(ItemStack stack){var o=new JsonObject();o.addProperty("item",stack.isEmpty()?null:BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());o.addProperty("count",stack.getCount());o.addProperty("damage",stack.getDamageValue());o.addProperty("maxDamage",stack.getMaxDamage());var potion=stack.get(net.minecraft.core.component.DataComponents.POTION_CONTENTS);if(potion!=null&&potion.potion().isPresent()){var components=new JsonObject();components.addProperty("potion",BuiltInRegistries.POTION.getKey(potion.potion().get().value()).toString());o.add("components",components);}var token=PeakTokens.of(stack);if(token!=null)o.add("peak",PeakTokens.json(token));return o;}
+ public static String snapshot(ServerPlayer player){var o=new JsonObject();o.addProperty("t","inventory");var a=new JsonArray();for(int i=0;i<36;i++)a.add(stack(player.getInventory().getItem(i)));o.add("slots",a);o.addProperty("selected",player.getInventory().getSelectedSlot());o.addProperty("stowed",player instanceof com.bornparanoid.peakpassthrough.session.BridgePlayer bp&&bp.stowed);o.add("carried",stack(player.inventoryMenu.getCarried()));return o.toString();}
+ public static String held(ServerPlayer player){var o=new JsonObject();o.addProperty("t","held");o.addProperty("using",player.isUsingItem());o.addProperty("item",player.getMainHandItem().isEmpty()?null:BuiltInRegistries.ITEM.getKey(player.getMainHandItem().getItem()).toString());var token=PeakTokens.of(player.getMainHandItem());if(token!=null)o.add("peak",PeakTokens.json(token));return o.toString();}
+ public static String avatarHeld(String player,String item,boolean using){var o=new JsonObject();o.addProperty("t","avatar_held");o.addProperty("player",player);o.addProperty("item",item);o.addProperty("using",using);return o.toString();}
+ public static String avatarHeld(String player,String item,boolean using,float swing){if(!Float.isFinite(swing)||swing<0||swing>1)throw new IllegalArgumentException("swing");var o=JsonParser.parseString(avatarHeld(player,item,using)).getAsJsonObject();o.addProperty("swing",swing);return o.toString();}
+ public static String avatarHeld(ServerPlayer player){var o=JsonParser.parseString(avatarHeld(player.getUUID().toString(),player.getMainHandItem().isEmpty()?null:BuiltInRegistries.ITEM.getKey(player.getMainHandItem().getItem()).toString(),player.isUsingItem(),player.getSwingAnimation(0))).getAsJsonObject();var token=PeakTokens.of(player.getMainHandItem());if(token!=null)o.add("peak",PeakTokens.json(token));return o.toString();}
+}

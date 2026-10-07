@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <PeakDir Condition="'$(PeakDir)' == ''">$(PEAK_DIR)</PeakDir>
+    <PeakManaged>$(PeakDir)/PEAK_Data/Managed</PeakManaged>
+    <BepInExCore>$(PeakDir)/BepInEx/core</BepInExCore>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+</Project>

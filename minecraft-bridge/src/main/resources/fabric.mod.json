@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "passpeakthrough",
+  "version": "${version}",
+  "name": "Peakthrough Minecraft Bridge",
+  "description": "Minecraft rules and optional observer access for the Peakthrough PEAK mod.",
+  "authors": [
+    "reconhawklabs"
+  ],
+  "contact": {
+    "sources": "https://github.com/reconhawklabs/Peakthrough"
+  },
+  "license": "CC0-1.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.bornparanoid.peakpassthrough.PassPeakThrough"
+    ],
+    "client": [
+      "com.bornparanoid.peakpassthrough.client.PassPeakThroughClient"
+    ]
+  },
+  "mixins": [
+    "passpeakthrough.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "package": "com.bornparanoid.peakpassthrough.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "FishingHookAccessor",
+    "ServerSoundsMixin",
+    "MobSunBurnMixin",
+    "LivingEffectsMixin",
+    "EnderPearlMixin",
+    "DragonNodesMixin",
+    "DragonLandingMixin",
+    "DragonTakeoffMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

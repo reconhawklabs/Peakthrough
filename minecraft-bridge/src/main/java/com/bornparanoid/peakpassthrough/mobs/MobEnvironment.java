@@ -1,0 +1,10 @@
+package com.bornparanoid.peakpassthrough.mobs;
+import com.google.gson.*;
+import java.util.*;
+public record MobEnvironment(double time,boolean night,String segment,String biome,List<Point> campfires,boolean mobs,boolean deposits,boolean griefing,boolean sunBurn,int hostileCap,int passiveCap,int runCap) {
+ public record Point(double x,double y,double z){}
+ private static double number(JsonElement e){if(e==null||!e.isJsonPrimitive()||!e.getAsJsonPrimitive().isNumber())throw new IllegalArgumentException("Numeric env field");double v=e.getAsDouble();if(!Double.isFinite(v))throw new IllegalArgumentException("Finite env field");return v;}
+ private static boolean flag(JsonObject o,String key,boolean fallback){if(!o.has(key))return fallback;var v=o.get(key);if(!v.isJsonPrimitive()||!v.getAsJsonPrimitive().isBoolean())throw new IllegalArgumentException("Boolean env field");return v.getAsBoolean();}
+ private static int cap(JsonObject o,String key,int fallback,int max){if(!o.has(key))return fallback;double v=number(o.get(key));if(v!=Math.rint(v)||v<0||v>max)throw new IllegalArgumentException("Cap bounds");return (int)v;}
+ public static MobEnvironment parse(JsonObject o){try{double time=number(o.get("time"));if(time<0||time>48)return null;if(!o.has("night"))return null;String biome=o.get("biome").getAsString();if(biome.length()>32)return null;String segment=o.has("segment")?o.get("segment").getAsString():"Beach";if(segment.length()>32)return null;if(!(o.get("campfires") instanceof JsonArray a)||a.size()>16)return null;var fires=new ArrayList<Point>();for(var token:a){if(!(token instanceof JsonArray p)||p.size()!=3)return null;double x=number(p.get(0)),y=number(p.get(1)),z=-number(p.get(2));if(Math.abs(x)>30000000||Math.abs(z)>30000000||y< -2030||y>2030)return null;fires.add(new Point(x,y,z));}return new MobEnvironment(time%24,flag(o,"night",false),segment,biome,List.copyOf(fires),flag(o,"mobs",true),flag(o,"deposits",true),flag(o,"griefing",false),flag(o,"sunBurn",false),cap(o,"hostileCap",6,64),cap(o,"passiveCap",6,64),cap(o,"runCap",24,128));}catch(RuntimeException e){return null;}}
+}

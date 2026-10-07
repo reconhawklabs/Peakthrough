@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+**/build/
+**/.gradle/
+**/run/
+**/__pycache__/
+**/logs/
+/data/
+/asset-cache/
+peak-decompiled/
+.env*
+*.previous

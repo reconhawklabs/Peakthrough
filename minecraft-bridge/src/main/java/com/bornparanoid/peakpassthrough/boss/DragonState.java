@@ -1,0 +1,12 @@
+package com.bornparanoid.peakpassthrough.boss;
+import com.google.gson.*;
+import java.util.UUID;
+import net.minecraft.core.BlockPos;
+public final class DragonState {
+ private boolean triggered,killed;private UUID uuid;private BlockPos origin;
+ public boolean trigger(BlockPos point){if(triggered||killed)return false;if(point==null)throw new IllegalArgumentException("origin");origin=point.immutable();uuid=UUID.randomUUID();triggered=true;return true;}
+ public boolean triggered(){return triggered;}public boolean killed(){return killed;}public UUID uuid(){return uuid;}public BlockPos origin(){return origin;}
+ public void markKilled(){if(!triggered)throw new IllegalStateException("Untriggered dragon");killed=true;}
+ public JsonObject json(){var o=new JsonObject();o.addProperty("triggered",triggered);o.addProperty("killed",killed);if(uuid==null)o.add("uuid",JsonNull.INSTANCE);else o.addProperty("uuid",uuid.toString());if(origin==null)o.add("origin",JsonNull.INSTANCE);else{var a=new JsonArray();a.add(origin.getX());a.add(origin.getY());a.add(origin.getZ());o.add("origin",a);}return o;}
+ public static DragonState parse(JsonObject o){try{var s=new DragonState();for(String k:new String[]{"triggered","killed"})if(o.get(k)==null||!o.get(k).isJsonPrimitive()||!o.get(k).getAsJsonPrimitive().isBoolean())throw new IllegalArgumentException(k);s.triggered=o.get("triggered").getAsBoolean();s.killed=o.get("killed").getAsBoolean();if(s.killed&&!s.triggered)throw new IllegalArgumentException("killed");if(s.triggered){var id=o.get("uuid");if(id==null||!id.isJsonPrimitive()||!id.getAsJsonPrimitive().isString()||!id.getAsString().matches("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"))throw new IllegalArgumentException("uuid");s.uuid=UUID.fromString(id.getAsString());var a=o.getAsJsonArray("origin");if(a.size()!=3)throw new IllegalArgumentException("origin");int[] p=new int[3];for(int i=0;i<3;i++){var t=a.get(i);if(!t.isJsonPrimitive()||!t.getAsJsonPrimitive().isNumber())throw new IllegalArgumentException("origin");double n=t.getAsDouble();if(!Double.isFinite(n)||n!=Math.rint(n)||Math.abs(n)>30000000||(i==1&&(n< -2032||n>2031)))throw new IllegalArgumentException("origin");p[i]=(int)n;}s.origin=new BlockPos(p[0],p[1],p[2]);}else if((o.has("uuid")&&!o.get("uuid").isJsonNull())||(o.has("origin")&&!o.get("origin").isJsonNull()))throw new IllegalArgumentException("Unexpected identity");return s;}catch(RuntimeException e){throw new IllegalStateException("Invalid dragon state; refusing reset",e);}}
+}
