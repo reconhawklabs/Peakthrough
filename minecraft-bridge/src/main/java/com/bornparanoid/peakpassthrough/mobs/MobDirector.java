@@ -18,6 +18,7 @@ public final class MobDirector {
  public record Run(String seed,RunRegions.Region region,List<ServerPlayer> players,MobEnvironment env,List<SpawnHints.Cell> hints) {}
  public static boolean sunBurn=false;
  private final Map<String,Long> lastSpawn=new HashMap<>();
+ private final Map<String,Long> arrived=new HashMap<>(),lastActive=new HashMap<>();
  private final Map<UUID,Long> born=new HashMap<>();
  private final Random random=new Random();
  public MobDirector(MinecraftServer server){
@@ -29,6 +30,7 @@ public final class MobDirector {
   Set<UUID> present=new HashSet<>();
   for(var run:runs){
    var env=run.env();
+   if(tick-lastActive.getOrDefault(run.seed(),-1000L)>100)arrived.put(run.seed(),tick);lastActive.put(run.seed(),tick);long elapsed=tick-arrived.get(run.seed());
    sunBurn=env.sunBurn();
    server.getGlobalGameRules().set(GameRules.MOB_GRIEFING,env.griefing(),server);
    var clock=level.dimensionType().defaultClock().or(()->level.registryAccess().get(WorldClocks.OVERWORLD));
@@ -41,6 +43,7 @@ public final class MobDirector {
      double nearest=run.players().stream().mapToDouble(p->Math.sqrt(mob.distanceToSqr(p))).min().orElse(Double.POSITIVE_INFINITY);
      var closest=run.hints().stream().min(Comparator.comparingDouble(h->distanceSquared(h,mob.getX(),mob.getY(),mob.getZ())));
      boolean open=closest.isPresent()&&distanceSquared(closest.get(),mob.getX(),mob.getY(),mob.getZ())<=64&&closest.get().open();
+     if(MobArrivalSafety.clear(MobTable.hostile(type(mob)),nearest,elapsed)){mob.discard();continue;}
      if(MobBudget.despawn(MobTable.hostile(type(mob)),nearest,!env.night(),open,age)){mob.discard();continue;}
     }
     mobs.add(mob);
@@ -50,6 +53,8 @@ public final class MobDirector {
    String type=MobTable.pick(MobTable.Biome.of(env.biome()),env.night(),cell.dark(),random.nextDouble());
    if(type==null)continue;
    boolean hostile=MobTable.hostile(type);
+   double distance=run.players().stream().mapToDouble(p->Math.sqrt(Math.pow(p.getX()-cell.x(),2)+Math.pow(p.getY()-cell.y(),2)+Math.pow(p.getZ()-cell.z(),2))).min().orElse(0);
+   if(!MobArrivalSafety.spawn(hostile,distance,elapsed))continue;
    int hostileNear=0,passiveNear=0;
    for(var mob:mobs)if(run.players().stream().anyMatch(p->mob.distanceToSqr(p)<=48*48)){if(MobTable.hostile(type(mob)))hostileNear++;else passiveNear++;}
    if(!MobBudget.allow(hostileNear,passiveNear,mobs.size(),lastSpawn.getOrDefault(run.seed(),-100L),tick,hostile,env.hostileCap(),env.passiveCap(),env.runCap()))continue;

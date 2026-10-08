@@ -89,7 +89,7 @@ namespace PeakCreativeMode.Plugin
             _root.SetActive(connected&&ch!=null&&!ch.inAirport);
             if(!connected)return;
             var watch=System.Diagnostics.Stopwatch.StartNew();
-            for(int i=0;i<Plugin.Keys.ChunksPerFrame.Value&&Grid.Dirty.Count>0;i++)
+            for(int i=0;i<Plugin.Keys.ChunksPerFrame.Value&&Grid.Dirty.Count>0&&watch.Elapsed.TotalMilliseconds<2;i++)
             {
                 GridPos chunk=Grid.Dirty.First();Grid.Dirty.Remove(chunk);Rebuild(chunk);
             }

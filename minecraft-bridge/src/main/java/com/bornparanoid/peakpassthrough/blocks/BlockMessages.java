@@ -39,4 +39,10 @@ public final class BlockMessages {
         }
         return result;
     }
+    /** Only for a fresh receiver after welcome clears its grid; existing receivers need full clearing chunks. */
+    public static List<String> initialSnapshot(Set<BlockIndex.Pos> positions,Function<BlockIndex.Pos,String> state){
+        var groups=new HashMap<Chunk,Set<BlockIndex.Pos>>();var states=new HashMap<BlockIndex.Pos,String>();
+        for(var p:positions){var id=state.apply(p);if(id.equals("minecraft:air")||id.startsWith("minecraft:barrier"))continue;states.put(p,id);groups.computeIfAbsent(new Chunk(Math.floorDiv(p.x(),16),Math.floorDiv(p.y(),16),Math.floorDiv(p.z(),16)),c->new HashSet<>()).add(p);}
+        var result=new ArrayList<String>();for(var cells:groups.values())if(cells.size()<=48){for(var p:cells)result.add(block(p,states.get(p)));}else result.addAll(snapshot(cells,states::get));return result;
+    }
 }

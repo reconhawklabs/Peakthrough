@@ -18,7 +18,7 @@ namespace PeakCreativeMode.Core
         private readonly Func<string> _helloFactory;
         private readonly Action<string> _log;
         private readonly int _retryMs;
-        private readonly ConcurrentQueue<JObject> _inbox = new ConcurrentQueue<JObject>();
+        private readonly BridgeMessageQueue _inbox = new BridgeMessageQueue();
         private readonly BlockingCollection<string> _outbox = new BlockingCollection<string>(new ConcurrentQueue<string>(), 10000);
         private volatile BridgeStatus _status = BridgeStatus.Offline;
         private volatile bool _running;

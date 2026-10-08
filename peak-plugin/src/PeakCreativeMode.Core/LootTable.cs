@@ -8,9 +8,9 @@ namespace PeakCreativeMode.Core
  {
   public static readonly string[] Protected={"rope","backpack","flare","guidebook","book","compass","piton","chain","bugle","passport","anchor","shelf"};
   private static readonly Loot[][] Tables={
-   /*Beach*/   new[]{new Loot("minecraft:potion",1,"minecraft:swiftness"),new Loot("minecraft:golden_apple",1),new Loot("minecraft:potion",1,"minecraft:leaping"),new Loot("minecraft:torch",8),new Loot("minecraft:bread",3)},
-   /*Tropics*/ new[]{new Loot("minecraft:ender_pearl",2),new Loot("minecraft:cooked_porkchop",3),new Loot("minecraft:golden_apple",1),new Loot("minecraft:potion",1,"minecraft:leaping"),new Loot("minecraft:potion",1,"minecraft:slow_falling")},
-   /*Alpine+*/ new[]{new Loot("minecraft:ender_pearl",3),new Loot("minecraft:potion",1,"minecraft:slow_falling"),new Loot("minecraft:potion",1,"minecraft:swiftness"),new Loot("minecraft:golden_apple",1),new Loot("minecraft:iron_sword",1),new Loot("minecraft:arrow",16)}};
+   /*Beach*/   new[]{new Loot("minecraft:potion",1,"minecraft:swiftness"),new Loot("minecraft:golden_apple",1),new Loot("minecraft:potion",1,"minecraft:leaping"),new Loot("minecraft:torch",8),new Loot("minecraft:bread",3),new Loot("minecraft:tnt",2),new Loot("minecraft:flint_and_steel",1)},
+   /*Tropics*/ new[]{new Loot("minecraft:ender_pearl",2),new Loot("minecraft:cooked_porkchop",3),new Loot("minecraft:golden_apple",1),new Loot("minecraft:potion",1,"minecraft:leaping"),new Loot("minecraft:potion",1,"minecraft:slow_falling"),new Loot("minecraft:tnt",2),new Loot("minecraft:flint_and_steel",1)},
+   /*Alpine+*/ new[]{new Loot("minecraft:ender_pearl",3),new Loot("minecraft:potion",1,"minecraft:slow_falling"),new Loot("minecraft:potion",1,"minecraft:swiftness"),new Loot("minecraft:golden_apple",1),new Loot("minecraft:iron_sword",1),new Loot("minecraft:arrow",16),new Loot("minecraft:tnt",3),new Loot("minecraft:flint_and_steel",1)}};
   public static bool Eligible(string peakItemName)=>!string.IsNullOrEmpty(peakItemName)&&!Protected.Any(p=>peakItemName.IndexOf(p,StringComparison.OrdinalIgnoreCase)>=0);
   public static double Roll(string runKey,string spawnKey){unchecked{uint h=2166136261;foreach(char c in runKey+"\0"+spawnKey){h^=c;h*=16777619;}return (h&0xFFFFFF)/(double)0x1000000;}}
   public static bool ShouldReplace(string runKey,string spawnKey,string peakItemName,double chance,bool replaceProtected=false)=>(replaceProtected?!string.IsNullOrEmpty(peakItemName):Eligible(peakItemName))&&chance>0&&Roll(runKey,spawnKey)<chance;

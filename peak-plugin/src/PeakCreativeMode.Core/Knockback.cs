@@ -1,7 +1,7 @@
 using System;
 namespace PeakCreativeMode.Core {
  public static class Knockback {
-  public static float SourceScale(string source,float scale,float creeper){if(!float.IsFinite(scale)||scale<=0)return 0;if(source!="creeper")return scale;if(!float.IsFinite(creeper)||creeper<0)return 0;return scale*Math.Min(6,creeper);}
+  public static float SourceScale(string source,float scale,float creeper){if(!float.IsFinite(scale)||scale<=0)return 0;if(source!="creeper"&&source!="tnt")return scale;if(!float.IsFinite(creeper)||creeper<0)return 0;return scale*Math.Min(6,creeper);}
   // A three-quarter-second equivalent blast, capped at 30 m/s by ToUnity's 40-unit bound.
   public static V3 CreeperVelocity(double[] mc,float scale){var force=ToUnity(mc,scale);return new V3(force.X*.75f,force.Y*.75f,force.Z*.75f);}
   public static V3 ToUnity(double[] mc,float scale){

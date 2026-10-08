@@ -24,7 +24,7 @@ namespace PeakCreativeMode.Plugin
             gameObject.AddComponent<ItemUI>();gameObject.AddComponent<PeakItemBridge>();gameObject.AddComponent<UnifiedHotbar>();gameObject.AddComponent<HotbarHud>();gameObject.AddComponent<HeldItemRenderer>();gameObject.AddComponent<BowFov>();
             gameObject.AddComponent<TerrainSampler>();gameObject.AddComponent<DragonTerrainSampler>();gameObject.AddComponent<SpawnHintSampler>();gameObject.AddComponent<WorldEventLink>();gameObject.AddComponent<LootReplacer>();gameObject.AddComponent<EffectLink>();
             gameObject.AddComponent<ItemEntities>();
-            gameObject.AddComponent<EntityRenderer>();gameObject.AddComponent<BossHud>();gameObject.AddComponent<FishingRenderer>();
+            gameObject.AddComponent<EntityRenderer>();gameObject.AddComponent<EmbeddedArrows>();gameObject.AddComponent<BossHud>();gameObject.AddComponent<FishingRenderer>();
             gameObject.AddComponent<MiningOverlay>();
             gameObject.AddComponent<WorldDiagnostics>();gameObject.AddComponent<NativeHudLayout>();
             new HarmonyLib.Harmony(BuildInfo.PluginGuid).PatchAll();

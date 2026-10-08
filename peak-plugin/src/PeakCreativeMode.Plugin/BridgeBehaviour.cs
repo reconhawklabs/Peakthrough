@@ -50,12 +50,13 @@ namespace PeakCreativeMode.Plugin
             if(Time.unscaledTime>=_nextIdentity){_nextIdentity=Time.unscaledTime+1f;string seed=RunIdentity.Current();if(seed!=_requestedSeed||Role()!=_role)Connect(seed);}
             if(Client is PhotonGuestBridge guest && guest.NeedsReconnect)Connect(_requestedSeed);
             Client.Tick();
-            while (Client.TryReceive(out var msg))
+            var receiveBudget=System.Diagnostics.Stopwatch.StartNew();
+            for(int received=0;received<96&&receiveBudget.Elapsed.TotalMilliseconds<2&&Client.TryReceive(out var msg);received++)
             {
                 if (Client.Status != BridgeStatus.Connected) continue;
                 switch ((string)msg["t"])
                 {
-                    case "welcome": MapSeed=Protocol.WelcomeSeed(msg,_requestedSeed);WorldEventLink.Instance?.Replay(); BossHud.Instance?.Clear(); EffectLink.Instance?.Clear(); LootReplacer.Instance?.Replay(); HeldItemRenderer.Instance?.Clear(); Terraformer.Instance?.Clear(); PlayerUuid=(string)msg["playerUuid"]; BlockRenderer.Instance?.Clear(); LastDebugState=null; LastHeld=null; ItemUI.Instance?.Clear();ItemEntities.Instance?.Clear();EntityRenderer.Instance?.Clear();FishingRenderer.Instance?.Clear(); break;
+                    case "welcome": EmbeddedArrows.Instance?.Clear(); MapSeed=Protocol.WelcomeSeed(msg,_requestedSeed);WorldEventLink.Instance?.Replay(); BossHud.Instance?.Clear(); EffectLink.Instance?.Clear(); LootReplacer.Instance?.Replay(); HeldItemRenderer.Instance?.Clear(); Terraformer.Instance?.Clear(); PlayerUuid=(string)msg["playerUuid"]; BlockRenderer.Instance?.Clear(); LastDebugState=null; LastHeld=null; ItemUI.Instance?.Clear();ItemEntities.Instance?.Clear();EntityRenderer.Instance?.Clear();FishingRenderer.Instance?.Clear(); break;
                     case "debug_state": LastDebugState=msg; break;
                     case "chunk": case "block": BlockRenderer.Instance?.Receive(msg);Terraformer.Instance?.Receive(msg); break;
                     case "avatar_held":HeldItemRenderer.Instance?.Receive(msg);break;

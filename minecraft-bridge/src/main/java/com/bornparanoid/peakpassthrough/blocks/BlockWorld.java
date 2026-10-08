@@ -41,6 +41,12 @@ public final class BlockWorld {
     public String blockState(BlockPos p){return state(new BlockIndex.Pos(p.getX(),p.getY(),p.getZ()));}
     private BlockPos nativePos(BlockIndex.Pos p){return new BlockPos(p.x(),p.y(),p.z());}
     private String state(BlockIndex.Pos p){var state=level.getBlockState(nativePos(p));String properties=state.getValues().map(Object::toString).sorted().collect(java.util.stream.Collectors.joining(","));return BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString()+(properties.isEmpty()?"":"["+properties+"]");}
+    public void initialSnapshot(int client,com.bornparanoid.peakpassthrough.dimension.RunRegions.Region region){
+        if(volumes.all().stream().anyMatch(v->region.owns(v.x(),v.z()))){snapshot(client,region);return;}
+        var positions=index.positions().stream().filter(p->region.owns(p.x(),p.z())).collect(java.util.stream.Collectors.toSet());
+        var lines=BlockMessages.initialSnapshot(positions,p->{String current=state(p);known.put(p,current);return current;});
+        for(var line:lines)bridge.send(client,line);
+    }
     public void snapshot(int client,com.bornparanoid.peakpassthrough.dimension.RunRegions.Region region){
         var positions=index.positions().stream().filter(p->region.owns(p.x(),p.z())).collect(java.util.stream.Collectors.toSet());
         var lines=BlockMessages.snapshot(positions,p->{String current=state(p);known.put(p,current);return current;});

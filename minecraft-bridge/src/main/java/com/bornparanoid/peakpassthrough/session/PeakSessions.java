@@ -150,6 +150,7 @@ public final class PeakSessions {
         UUID uuid = UUID.nameUUIDFromBytes(("peak:"+seed+"\0"+r.playerId()).getBytes(UTF_8));
 		BridgePlayer player = new BridgePlayer(blocks.level(),new GameProfile(uuid,Handshake.profileName(r.playerId())),(amount,source,knock)->{String line=CombatMessages.damage(amount,source,knock);if(line!=null)bridge.send(clientId,line);},(nutrition,saturation)->{String line=FoodMessages.eat(nutrition,saturation);if(line!=null)bridge.send(clientId,line);});
         player.effects=line->bridge.send(clientId,line);
+        player.bridgeArrow=o->{String line=o.toString();sessions.forEach((id,s)->{if(s.seed().equals(seed))bridge.send(id,line);});};
         player.bridgeTeleport=pos->{var o=new JsonObject();o.addProperty("t","teleport");var a=new com.google.gson.JsonArray();a.add(pos.x);a.add(pos.y);a.add(pos.z);o.add("pos",a);bridge.send(clientId,o.toString());};
         try{inventories.restore(seed,r.playerId(),player);}catch(java.io.IOException e){LOGGER.error("Cannot restore inventory",e);bridge.sendAndClose(clientId,Protocol.error("saved inventory unavailable"));return;}
         player.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.SPECTATOR);
@@ -158,7 +159,7 @@ public final class PeakSessions {
         blocks.level().addNewPlayer(player);
 		sessions.put(clientId, new Session(r.playerId(),seed,region,player));
 		var welcome=JsonParser.parseString(Protocol.welcome(server.getServerVersion())).getAsJsonObject();welcome.addProperty("playerUuid",uuid.toString());welcome.addProperty("mapSeed",seed);bridge.send(clientId,welcome.toString());
-		blocks.snapshot(clientId,region);
+		blocks.initialSnapshot(clientId,region);
 		actions.sync(clientId,player);
 		LOGGER.info("PEAK player {} joined as {}", r.playerId(), player.getGameProfile().name());
 	}

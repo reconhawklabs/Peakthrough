@@ -7,7 +7,7 @@ Minecraft blocks, tools, mobs, fishing and a dragon fight inside PEAK. Play alon
 1. Own **PEAK** and **Minecraft Java Edition**. This mod uses Minecraft **26.3**.
 2. Install [BepInExPack_PEAK](https://thunderstore.io/c/peak/p/BepInEx/BepInExPack_PEAK/) first. Launch PEAK once, then close it.
 3. Install [Java 25 **JDK**](https://adoptium.net/temurin/releases/?version=25) and [Python 3](https://www.python.org/downloads/). On Windows, enable **Add to PATH** during installation.
-4. [Download Peakthrough v1](https://github.com/reconhawklabs/Peakthrough/archive/refs/tags/v1.0.0.zip), then **extract the ZIP**. Keep the extracted folder.
+4. [Download Peakthrough v1.0.4](https://github.com/reconhawklabs/Peakthrough/archive/refs/tags/v1.0.4.zip), then **extract the ZIP**. Keep the extracted folder.
 
 ## Host — solo or hosting friends
 
@@ -24,6 +24,8 @@ Minecraft blocks, tools, mobs, fishing and a dragon fight inside PEAK. Play alon
 
 Everyone needs the same Peakthrough version.
 
+Crash-site supplies include a pickaxe, fishing rod, iron sword, **3 ender pearls** and **3 golden apples**. Find or loot TNT; place it and use flint and steel to light it. The dragon campfire has **2 bows and 96 arrows**.
+
 ## Controls
 
 **1–9 / wheel:** select items · **same number again:** empty hand · **0:** backpack · **I:** inventory · **left mouse:** mine/attack · **right mouse:** place/use/fish · **Q:** drop.
@@ -32,7 +34,7 @@ Everyone needs the same Peakthrough version.
 
 A Minecraft **26.3** player can use **Multiplayer → Direct Connection** and enter the host’s local-network IP followed by `:25565` (on the host’s computer: `127.0.0.1:25565`). They join as flying spectators to watch blocks, mobs and avatars. PEAK’s mountain scenery appears only in PEAK.
 
-No client mod is required to watch. For a Fabric installation, put **fabric/Peakthrough-Bridge-1.0.0.jar** in Minecraft’s **mods** folder alongside Fabric API for 26.3, using [Fabric Loader](https://fabricmc.net/use/). This optional JAR provides the Minecraft bridge and the local model export used by setup. PEAK clients do not install this JAR manually. The host’s server permits LAN observers and uses offline authentication; keep it on a trusted network.
+No client mod is required to watch. For a Fabric installation, put **fabric/Peakthrough-Bridge-1.0.4.jar** in Minecraft’s **mods** folder alongside Fabric API for 26.3, using [Fabric Loader](https://fabricmc.net/use/). This optional JAR provides the Minecraft bridge and the local model export used by setup. PEAK clients do not install this JAR manually. The host’s server permits LAN observers and uses offline authentication; keep it on a trusted network.
 
 ## If something goes wrong
 
