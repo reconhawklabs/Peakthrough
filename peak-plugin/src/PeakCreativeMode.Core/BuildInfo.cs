@@ -4,6 +4,6 @@ namespace PeakCreativeMode.Core
     {
         public const string PluginGuid = "com.bornparanoid.peakcreativemode";
         public const string PluginName = "Peakthrough";
-        public const string Version = "1.0.4";
+        public const string Version = "1.0.5";
     }
 }

@@ -1,5 +1,11 @@
 # Changes
 
+## 1.0.5
+
+- Fixed setup when an existing config uses a custom asset-cache folder.
+- Added an explicit Windows Python launcher check and clearer setup instructions.
+- Gameplay is unchanged; existing 1.0.4 players remain compatible.
+
 ## 1.0.4
 
 - Fixed co-op inventory delays and host stuttering caused by queued world/mob updates.

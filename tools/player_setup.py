@@ -99,6 +99,7 @@ def main():
   # Do not copy a development world into a player's new server.
   (server/'world').mkdir(parents=True,exist_ok=True)
   package(source,server)
+ destination.mkdir(parents=True,exist_ok=True)
  for name in ('Peakthrough.dll','PeakCreativeMode.Core.dll'):shutil.copy2(binaries/name,destination/name)
  for name in ('PeakCreativeMode.Plugin.dll','PeakCreativeMode.Core.dll'):
   legacy=peak/'BepInEx/plugins/PeakCreativeMode'/name
